@@ -1,13 +1,12 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useTransform,
+  useViewportScroll,
+} from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 1500px;
-  width: 100vw;
-`;
 
 const MotionWrapper = styled(motion.div)`
   display: flex;
@@ -18,13 +17,14 @@ const MotionWrapper = styled(motion.div)`
   border-radius: 20px;
   width: 100%;
   margin: 20px 0;
-  overflow: hidden;
+  position: relative;
 `;
 const TitleWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 80px;
   font-family: "Dancing Script", cursive;
   color: white;
@@ -35,15 +35,12 @@ const TitleWrapper = styled(motion.div)`
 const Box = styled(motion.div)`
   width: 100px;
   height: 100px;
+  position: absolute;
   background-color: rgba(255, 255, 255, 1);
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
   border: 3px solid #f39c12;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 const Text = styled.h1`
   color: #4a69bd;
@@ -54,25 +51,40 @@ const Text = styled.h1`
   text-align: center;
 `;
 const boxVariants = {
-  click: {
-    borderRadius: "50%",
-  },
+  click: { borderRadius: "50%" },
 };
 
 function MotionSlider() {
   const MotionWrapperRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const [boxWidth, setBoxWidth] = useState(0);
+
+  const { scrollY, scrollYProgress } = useViewportScroll();
+
+  const resizingHandler = () => {
+    setBoxWidth(MotionWrapperRef.current?.offsetWidth ?? 0);
+  };
+
+  useEffect(() => {
+    setBoxWidth(MotionWrapperRef.current?.offsetWidth ?? 0);
+    window.addEventListener("resize", resizingHandler);
+    return () => {
+      window.removeEventListener("resize", resizingHandler);
+    };
+  }, []);
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.5, 3.2]);
+
   return (
     <>
-      <TitleWrapper>Draggable Box</TitleWrapper>
+      <TitleWrapper>
+        Scroll
+        <br /> Detector
+      </TitleWrapper>
       <MotionWrapper ref={MotionWrapperRef}>
         <AnimatePresence>
-          <Box
-            drag
-            dragConstraints={MotionWrapperRef}
-            variants={boxVariants}
-            whileTap="click"
-          >
-            <Text>Drag Me</Text>
+          <Box style={{ scale }} variants={boxVariants}>
+            <Text>Scroll the page</Text>
           </Box>
         </AnimatePresence>
       </MotionWrapper>

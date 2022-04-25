@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
 import MotionSlider from "./Components/MotionSlider";
 import DragCircle from "./Components/DragCircle";
+import BackgroundChange from "./Components/BackgroundChange";
+import ScrollDetector from "./Components/ScrollDetector";
 
 const Wrapper = styled.div`
   display: grid;
@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   align-items: center;
   max-width: 1500px;
   width: 100vw;
+  padding: 0 30px;
 `;
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
       <Wrapper>
         <MotionSlider />
         <DragCircle />
+        <BackgroundChange />
+        <ScrollDetector />
       </Wrapper>
     </>
   );
