@@ -1,13 +1,6 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 import styled from "styled-components";
-
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 1500px;
-  width: 100vw;
-`;
 
 const MotionWrapper = styled(motion.div)`
   display: flex;
@@ -59,24 +52,22 @@ const boxVariants = {
   },
 };
 
-function MotionSlider() {
+function DragCircle() {
   const MotionWrapperRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <TitleWrapper>Draggable Box</TitleWrapper>
       <MotionWrapper ref={MotionWrapperRef}>
-        <AnimatePresence>
-          <Box
-            drag
-            dragConstraints={MotionWrapperRef}
-            variants={boxVariants}
-            whileTap="click"
-          >
-            <Text>Drag Me</Text>
-          </Box>
-        </AnimatePresence>
+        <Box
+          drag
+          dragConstraints={MotionWrapperRef}
+          variants={boxVariants}
+          whileTap="click"
+        >
+          <Text>Drag Me</Text>
+        </Box>
       </MotionWrapper>
     </>
   );
 }
-export default MotionSlider;
+export default DragCircle;

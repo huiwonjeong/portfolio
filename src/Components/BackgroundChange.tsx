@@ -1,10 +1,4 @@
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useTransform,
-  useViewportScroll,
-} from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
@@ -65,7 +59,7 @@ const boxVariants = {
   click: { borderRadius: "50%" },
 };
 
-function MotionSlider() {
+function BackgroundChange() {
   const MotionWrapperRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const [boxWidth, setBoxWidth] = useState(0);
@@ -73,7 +67,6 @@ function MotionSlider() {
   const resizingHandler = () => {
     setBoxWidth(MotionWrapperRef.current?.offsetWidth ?? 0);
   };
-  console.log(MotionWrapperRef);
 
   useEffect(() => {
     setBoxWidth(MotionWrapperRef.current?.offsetWidth ?? 0);
@@ -96,19 +89,17 @@ function MotionSlider() {
   return (
     <>
       <MotionWrapper ref={MotionWrapperRef} style={{ background: gradient }}>
-        <AnimatePresence>
-          <HR key="hr" />
-          <Box
-            style={{ x }}
-            drag="x"
-            dragConstraints={MotionWrapperRef}
-            dragElastic={0}
-            variants={boxVariants}
-            whileTap="click"
-          >
-            <Text>Swape Me</Text>
-          </Box>
-        </AnimatePresence>
+        <HR key="hr" />
+        <Box
+          style={{ x }}
+          drag="x"
+          dragConstraints={MotionWrapperRef}
+          dragElastic={0}
+          variants={boxVariants}
+          whileTap="click"
+        >
+          <Text>Swape Me</Text>
+        </Box>
       </MotionWrapper>
       <TitleWrapper>
         Changing
@@ -117,4 +108,4 @@ function MotionSlider() {
     </>
   );
 }
-export default MotionSlider;
+export default BackgroundChange;

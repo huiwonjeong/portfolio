@@ -1,5 +1,4 @@
 import {
-  AnimatePresence,
   motion,
   useMotionValue,
   useTransform,
@@ -54,7 +53,7 @@ const boxVariants = {
   click: { borderRadius: "50%" },
 };
 
-function MotionSlider() {
+function ScrollAnimation() {
   const MotionWrapperRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const [boxWidth, setBoxWidth] = useState(0);
@@ -79,16 +78,14 @@ function MotionSlider() {
     <>
       <TitleWrapper>
         Scroll
-        <br /> Detector
+        <br /> Animation
       </TitleWrapper>
       <MotionWrapper ref={MotionWrapperRef}>
-        <AnimatePresence>
-          <Box style={{ scale }} variants={boxVariants}>
-            <Text>Scroll the page</Text>
-          </Box>
-        </AnimatePresence>
+        <Box style={{ scale }} variants={boxVariants}>
+          <Text>Scroll the page</Text>
+        </Box>
       </MotionWrapper>
     </>
   );
 }
-export default MotionSlider;
+export default ScrollAnimation;
